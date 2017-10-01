@@ -1,0 +1,10 @@
+{
+  "lambda": {
+    "role": "image-store-executor",
+    "name": "image-store",
+    "region": "ap-south-1"
+  },
+  "api": {
+    "id": "k9qry7vw7l"
+  }
+}
