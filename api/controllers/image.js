@@ -53,13 +53,21 @@ function upload(req, res) {
 
   var bucketName = 'potatolive-image';
 
-  var fileParams = req.swagger.params.file.value;
-
-  if(fileParams.mimetype !== 'image/jpeg') {
-    res.status(500).json({'message': 'Only jpeg files allowed!'});
+  if(
+    !req.swagger.params || 
+    !req.swagger.params.file || 
+    !req.swagger.params.file.value || 
+    req.swagger.params.file.value.buffer <= 0 ) 
+  {
+    res.status(400).json({'message': 'File or its content missing in the request!'})
   } else {
-    var s3 = new AWS.S3();
+    var fileParams = req.swagger.params.file.value;
     
+    if(fileParams.mimetype !== 'image/jpeg') {
+      res.status(500).json({'message': 'Only jpeg files allowed!'});
+    } else {
+      var s3 = new AWS.S3();
+      
       var params = {
           Bucket: bucketName,
           Key: uuid.v4() + '.jpeg',
@@ -90,5 +98,6 @@ function upload(req, res) {
           res.send({'message': 'Error uploading file!'});
         }
       );
+    }  
   }
 }
