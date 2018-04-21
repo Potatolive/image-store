@@ -1,4 +1,4 @@
-https://travis-ci.org/Potatolive/image-store.svg?branch=master
+[![Build Status](https://travis-ci.org/Potatolive/image-store.svg?branch=master)](https://travis-ci.org/Potatolive/image-store)
 
 # Image store
 
