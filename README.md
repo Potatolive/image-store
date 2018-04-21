@@ -1,3 +1,5 @@
+https://travis-ci.org/Potatolive/image-store.svg?branch=master
+
 # Image store
 
 *Initial setup*
