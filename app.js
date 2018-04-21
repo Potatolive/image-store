@@ -8,11 +8,12 @@ var config = {
   appRoot: __dirname // required config
 };
 
+
 SwaggerExpress.create(config, function(err, swaggerExpress) {
   if (err) { throw err; }
 
   // install middleware
-  swaggerExpress.register(app);
+  swaggerExpress.register(app);  
 
   if(process.env.NODE_ENV === 'development') {
     var port = process.env.PORT || 10010;

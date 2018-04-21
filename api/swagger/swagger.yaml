@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
   version: "0.0.1"
-  title: Hello World App
+  title: Image related API end points
 # during dev, should point to your local machine
 host: localhost:10010
 # basePath prefixes all resource paths 
@@ -18,9 +18,65 @@ consumes:
 produces:
   - application/json
 paths:
+  /image/sign:
+    x-swagger-router-controller: image
+    get:
+      tags:
+        - Image
+      operationId: sign
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: fileType
+          type: string
+          in: query
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/SignResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /image/crop:
+    x-swagger-router-controller: image
+    post:
+      tags:
+        - Image
+      operationId: crop
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: cropParam
+          in: body
+          description: Crop coordinates
+          required: true
+          schema:
+            $ref: "#/definitions/CropParam"
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/ImageResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /images:
     x-swagger-router-controller: image
     post:
+      tags:
+        - Image
       operationId: upload  
       consumes:
         - multipart/form-data
@@ -47,6 +103,12 @@ paths:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
 definitions:
+  SignResponse:
+    properties:
+      signed_request:
+        type: string
+      filename:
+        type: string
   ImageResponse:
     required:
       - url
@@ -59,3 +121,19 @@ definitions:
     properties:
       message:
         type: string
+  CropParam:
+    properties:
+      imageUrl:
+        type: string
+      x: 
+        type: number
+      y: 
+        type: number
+      w: 
+        type: number
+      h: 
+        type: number
+      width:
+        type: number
+      height:
+        type: number

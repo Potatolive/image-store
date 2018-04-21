@@ -10,6 +10,7 @@
   "dependencies": {
     "aws-serverless-express": "^3.0.2",
     "claudia": "^2.14.2",
+    "easyimage": "^2.1.0",
     "express": "^4.12.3",
     "s3": "^4.4.0",
     "swagger-express-mw": "^0.1.0"
