@@ -60,8 +60,7 @@ function upload(req, res) {
       res.status(500).json({'message': 'Only jpeg files allowed!'});
     } else {
       var value = req.swagger.params.file.value.buffer;
-      // ContentLength: req.swagger.params.file.value.size,
-      var key = uuid.v4() + '.jpeg';
+      var key = req.swagger.params.file.value.originalname;
 
       uploadToS3(key, value, function(resp) {
         res.json(resp);
@@ -73,7 +72,6 @@ function upload(req, res) {
 }
 
 function uploadToS3(key, value, success, error) {
-  console.log(success);
   var awsConfig = {region: process.env.AWS_DEFAULT_REGION};
   AWS.config.update(awsConfig);
 
@@ -96,7 +94,6 @@ function uploadToS3(key, value, success, error) {
 
   s3.putObject(params, 
     function(data) {
-      console.log(data);
       var resp = {
         url: 
           'https://s3.' + 
